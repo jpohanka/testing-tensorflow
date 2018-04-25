@@ -1,3 +1,6 @@
+### Status
+[![Build Status](https://travis-ci.org/simkimsia/UtilityBehaviors.png)](https://travis-ci.org/jpohanka/testing-tensorflow.svg?branch=master)
+
 # testing-tensorflow
 
 TensorFlow, in the most general terms, is a software framework for numerical computations based on **dataflow graphs**. It is designed primarily, however, as an interface
