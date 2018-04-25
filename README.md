@@ -1,5 +1,5 @@
 ### Status
-[![Build Status](https://travis-ci.org/simkimsia/UtilityBehaviors.png)](https://travis-ci.org/jpohanka/testing-tensorflow.svg?branch=master)
+[![Build Status](https://travis-ci.org/jpohanka/testing-tensorflow.svg?branch=master)](https://travis-ci.org/jpohanka/testing-tensorflow)
 
 # testing-tensorflow
 
