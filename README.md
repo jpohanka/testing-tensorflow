@@ -1,5 +1,7 @@
 ### Status
-[![Build Status](https://travis-ci.org/jpohanka/testing-tensorflow.svg?branch=master)](https://travis-ci.org/jpohanka/testing-tensorflow)
+
+[![Build Status](https://travis-ci.org/jpohanka/testing-tensorflow.svg?branch=master)](https://travis-ci.org/jpohanka/testing-tensorflow)   [![Job Status](https://inspecode.rocro.com/badges/github.com/jpohanka/testing-tensorflow/status?token=ADiKFiCVHZSeYKOeiXjpKvkk_jJIisQZWmiQYAdrt-I)](https://inspecode.rocro.com/jobs/github.com/jpohanka/testing-tensorflow/latest?completed=true) [![Report](https://inspecode.rocro.com/badges/github.com/jpohanka/testing-tensorflow/report?token=ADiKFiCVHZSeYKOeiXjpKvkk_jJIisQZWmiQYAdrt-I&branch=master)](https://inspecode.rocro.com/reports/github.com/jpohanka/testing-tensorflow/branch/master/summary)
+
 
 # testing-tensorflow
 
