@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpccomm.tfcalculator";
+option java_outer_classname = "TFCalculator";
+option objc_class_prefix = "TFC";
+
+package grpccomm;
+
+// The request message containing the user's name. // TODO: define the request message
+message CalcRequest {
+}
+
+// The response message containing the greetings. // TODO: define the response message
+message CalcResponse {
+}
+
+service TFCalc {
+  // Define the gRPC calculation service.
+  rpc Calculate (CalcRequest) returns (CalcResponse) {}
+}
