@@ -45,7 +45,10 @@ with tf.Session(graph=t_copula) as sess:
     for epoch in range(n_epochs):
         sess.run(training_op, feed_dict={input_obs: sample_data})
 
-        best_dfs = neg_log_like.eval()
+        best_dfs = neg_log_like.eval(
+            feed_dict={input_obs: sample_data},
+            session=sess
+        )
         print(best_dfs)
 
 
