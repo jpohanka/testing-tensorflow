@@ -1,59 +1,40 @@
 sudo: enabled
 
-env:
-  - LANGUAGE=""
-
 matrix:
   include:
     # Java build
     - language: java
       jdk: oraclejdk8
-      env: LANGUAGE="java"
     
     # Python build
     - language: python
       python: 2.7
-      env: LANGUAGE="python"
       
     - language: python
       python: 3.6
-      env: LANGUAGE="python"
       
     # Golang build
     - language: go
       golang: 1.8
-      env: LANGUAGE="go"
 
 # 
 before_install:
-  - if [[ "$LANGUAGE" == "java" ]]; then
-      # TODO.
-    elif [[ "$LANGUAGE" == "python" ]]; then
+  # For the python builds, install the requirements.
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
       sudo pip install -r requirements.txt;
-    elif [[ "$LANGUAGE" == "go" ]]; then
-      # TODO.
+    fi
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+      sudo pip install -r requirements.txt;
     fi
         
 install:
-  - if [[ "$LANGUAGE" == "java" ]]; then
-      # TODO.
-    elif [[ "$LANGUAGE" == "python" ]]; then
-      # TODO.
-    elif [[ "$LANGUAGE" == "go" ]]; then
-      # TODO.
-    fi
+  - echo "pass"
 
 script:
-  - if [[ "$LANGUAGE" == "java" ]]; then
-      # (cd tf-demonstration/prod-server-mock &&  mvn test)
-    elif [[ "$LANGUAGE" == "python" ]]; then
-      # Run the python unit tests.
-      if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-        python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
-      fi
-      if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
-        python3 tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
-      fi
-    elif [[ "$LANGUAGE" == "go" ]]; then
-      # (cd tf-demonstration/prod-client-cli-mock &&  go test -v)
+  # Run the python unit tests.
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
+    fi
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+      python3 tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
     fi
