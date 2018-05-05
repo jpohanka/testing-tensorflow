@@ -10,12 +10,16 @@ matrix:
     - language: python
       python: 2.7
       
-      # 
-      install:
-        - echo "pass"
-      script:
-        - python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py
-      
     # # Golang build
     # - language: golang
     #   golang: 1.8
+
+# 
+before_install:
+  - sudo pip install r requirements.txt
+        
+install:
+  - echo "pass"
+
+script:
+  - python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py
