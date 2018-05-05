@@ -1,21 +1,32 @@
 sudo: enabled
 
+env:
+  - LANGUAGE=""
+
 matrix:
   include:
     # Java build
     - language: java
       jdk: oraclejdk8
+      env:
+        - LANGUAGE="java"
     
     # Python build
     - language: python
-      python: 2.7
-      
-    - language: python
-      python: 3.6
+      python:
+        - 2.7
+        - 3.6
+      env:
+        - LANGUAGE="python"
       
     # Golang build
     - language: go
-      golang: 1.8
+      go:
+        - 1.8
+        - 1.9
+        - 1.10
+      env:
+        - LANGUAGE="go"
 
 # 
 before_install:
