@@ -21,9 +21,11 @@ matrix:
 before_install:
   # For the python builds, install the requirements.
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      sudo pip install -r requirements.txt
+      sudo pip install -r requirements.txt;
+    fi
   - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
-      sudo pip3 install -r requirements.txt
+      sudo pip3 install -r requirements.txt;
+    fi
         
 install:
   - echo "pass"
@@ -31,6 +33,8 @@ install:
 script:
   # Run the python unit tests.
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py
+      python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
+    fi
   - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
-      python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py
+      python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
+    fi
