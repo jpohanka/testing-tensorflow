@@ -2,24 +2,35 @@ sudo: enabled
 
 matrix:
   include:
-    # # Java build
-    # - language: java
-    #   jdk: oraclejdk8
+    # Java build
+    - language: java
+      jdk: oraclejdk8
     
     # Python build
     - language: python
       python: 2.7
       
-    # # Golang build
-    # - language: golang
-    #   golang: 1.8
+    - language: python
+      python: 3.6
+      
+    # Golang build
+    - language: golang
+      golang: 1.8
 
 # 
 before_install:
-  - sudo pip install -r requirements.txt
+  # For the python builds, install the requirements.
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      sudo pip install -r requirements.txt
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+      sudo pip3 install -r requirements.txt
         
 install:
   - echo "pass"
 
 script:
-  - python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py
+  # Run the python unit tests.
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+      python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py
