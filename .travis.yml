@@ -1,23 +1,28 @@
 sudo: enabled
 
-env:
-  - LANGUAGE=""
-
 matrix:
   include:
     # Java build
     - language: java
       jdk: oraclejdk8
-      env:
-        - LANGUAGE="java"
+      before_install:
+        - echo "pass" #TODO.
+      install:
+        - echo "pass" #TODO.
+      script:
+        - echo "pass" #TODO.
     
     # Python build
     - language: python
       python:
         - 2.7
         - 3.6
-      env:
-        - LANGUAGE="python"
+      before_install:
+        - echo "pass" #TODO.
+      install:
+        - echo "pass" #TODO.
+      script:
+        - echo "pass" #TODO.
       
     # Golang build
     - language: go
@@ -25,27 +30,31 @@ matrix:
         - 1.8
         - 1.9
         - 1.10
-      env:
-        - LANGUAGE="go"
+      before_install:
+        - echo "pass" #TODO.
+      install:
+        - echo "pass" #TODO.
+      script:
+        - echo "pass" #TODO.
 
+# # 
+# before_install:
+#   # For the python builds, install the requirements.
+#   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+#       sudo pip install -r requirements.txt;
+#     fi
+#   - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+#       sudo pip install -r requirements.txt;
+#     fi
 # 
-before_install:
-  # For the python builds, install the requirements.
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      sudo pip install -r requirements.txt;
-    fi
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
-      sudo pip install -r requirements.txt;
-    fi
-        
-install:
-  - echo "pass"
-
-script:
-  # Run the python unit tests.
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
-    fi
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
-      python3 tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
-    fi
+# install:
+#   - echo "pass"
+# 
+# script:
+#   # Run the python unit tests.
+#   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+#       python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
+#     fi
+#   - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+#       python3 tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
+#     fi
