@@ -2,6 +2,8 @@
 Attempted implementation of fitting procedure found in SAS documentation:
 http://support.sas.com/documentation/cdl/en/etsug/66840/HTML/default/viewer.htm#etsug_copula_details06.htm
 Implementation of Maximum Likelyhood Estimation for 'dim' independent marginals.
+
+Tensorboard: tensorboard --logdir=/Users/peter/Documents/Pythonithub_repos/testing-tensorflow/tf-demonstration/models/logs
 '''
 
 import numpy as np
@@ -136,8 +138,7 @@ with tf.Session(graph=t_copula) as sess:
         if epoch % 100 == 0:
             print("Epoch", epoch, ": loss_diff =", loss_diff)
             saver_path = saver.save(
-                sess, '''/Users/peter/Documents/Python/github_repos/testing-tensorflow
-                    /tf-demonstration/models/logs/checkpoints/t_marginals.ckpt''')
+                sess, '/Users/peter/Documents/Python/github_repos/testing-tensorflow/tf-demonstration/models/logs/checkpoints/t_marginals.ckpt')
 
         if diff_norm < config.eps_param:
             print('Parameter convergence in {} iterations!'.format(epoch))
@@ -158,6 +159,5 @@ with tf.Session(graph=t_copula) as sess:
         epoch += 1
 
     saver.save(
-        sess, '''/Users/peter/Documents/Python/github_repos/testing-tensorflow
-            /tf-demonstration/models/logs/checkpoints/t_marginals_final.ckpt''')
+        sess, '/Users/peter/Documents/Python/github_repos/testing-tensorflow/tf-demonstration/models/logs/checkpoints/t_marginals_final.ckpt')
     file_writer.close()
