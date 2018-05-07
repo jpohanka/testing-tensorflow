@@ -18,7 +18,8 @@ matrix:
         #- 2.7
         - 3.6
       before_install:
-        #- sudo python -m pip install --upgrade pip
+        - sudo pip uninstall six
+        - sudo python -m pip install --upgrade pip
         - sudo pip install -r requirements.txt;
       install:
         - echo "pass" # make -f Makefile
