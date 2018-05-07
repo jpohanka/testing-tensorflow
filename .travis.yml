@@ -20,7 +20,7 @@ matrix:
       before_install:
         - sudo pip install -r requirements.txt;
       install:
-        - make -f Makefile
+        - echo "pass" # make -f Makefile
       script:
         - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
             python tf-demonstration/prod-client-gui-mock/run_all_tests.py;
