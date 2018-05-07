@@ -18,7 +18,7 @@ matrix:
         #- 2.7
         - 3.6
       before_install:
-        - sudo pip uninstall six
+        - sudo pip install six --upgrade
         - sudo python -m pip install --upgrade pip
         - sudo pip install -r requirements.txt;
       install:
