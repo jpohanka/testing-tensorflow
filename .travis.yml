@@ -6,30 +6,31 @@ matrix:
     - language: java
       jdk: oraclejdk8
       before_install:
-        - echo "skipped"; #TODO.
+        - echo "pass" #TODO.
       install:
-        - echo "skipped"; #TODO.
+        - echo "pass" #TODO.
       script:
-        - echo "skipped"; #TODO.
+        - echo "pass" #TODO.
     
     # Python build
     - language: python
       python:
-        - 2.7
+        #- 2.7
         - 3.6
       before_install:
-        - sudo pip install six --upgrade;
-        - sudo python -m pip install --upgrade pip;
+        - sudo pip install six --upgrade
+        - sudo python -m pip install --upgrade pip
         - sudo pip install -r requirements.txt;
       install:
-        - echo "skipped"; # make -f Makefile
+        - echo "pass" # make -f Makefile
       script:
-        - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-            echo "skipped"; # python tf-demonstration/prod-client-gui-mock/run_all_tests.py;
-          fi
-        - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
-            echo "skipped"; # python3 tf-demonstration/prod-client-gui-mock/run_all_tests.py;
-          fi
+        - echo "pass"
+        # - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+        #     python tf-demonstration/prod-client-gui-mock/run_all_tests.py;
+        #   fi
+        # - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+        #     python3 tf-demonstration/prod-client-gui-mock/run_all_tests.py;
+        #   fi
       
     # Golang build
     - language: go
@@ -38,8 +39,8 @@ matrix:
         - 1.9
         - 1.10
       before_install:
-        - echo "skipped"; #TODO.
+        - echo "pass" #TODO.
       install:
-        - echo "skipped"; #TODO.
+        - echo "pass" #TODO.
       script:
-        - echo "skipped"; #TODO.
+        - echo "pass" #TODO.
