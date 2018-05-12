@@ -1,5 +1,12 @@
 # model-import-export
 
+The following example illustrates the way how one can **train**, **persist**, **export** and **import** TensorFlow models.
+
+The example contains two scripts:
+
+  - `model_producer.py` - trains and persists a simple linear regression model.
+  - `model_consumer.py` - loads the persisted model and runs simple calculations. 
+
 ## model_producer
 
 The `model_producer.py` script runs the model training phase and persists the 
@@ -34,6 +41,28 @@ epoch: 1600, loss: 0.0024831872398546322, slope: 1.500002246637268, intercept: -
 epoch: 1700, loss: 0.0024828323119225407, slope: 1.5000032419527631, intercept: -2.9987310803980276
 epoch: 1800, loss: 0.002482735014588079, slope: 1.5000037630768492, intercept: -2.9987654813427604
 epoch: 1900, loss: 0.0024827083422117174, slope: 1.5000040359253222, intercept: -2.9987834928787764
+```
+
+## model_consumer
+
+The `model_consumer.py` loads the peristed trained model created by the `model_producer.py`. The script simply reads the `Saver` file format and through TF graph `collections` reads the information about the **input** and **output** variables.
+
+For example, after the `Saver` instance has loaded the persisted model, it is straightforward to e.g. extract the input variables from the collection `inputs`:
+
+```python
+print(sess.graph.get_collection("inputs"))
+```
+
+The previous line would yield the following result:
+
+```
+[<tf.Tensor 'inputs/x_sample:0' shape=(?, ?) dtype=float64>, <tf.Tensor 'inputs/y_sample:0' shape=(?, ?) dtype=float64>]
+```
+
+Run the `model_consumer.py` by the following command:
+
+```python
+python model_consumer.py
 ```
 
 ## MetaGraphDef proto
