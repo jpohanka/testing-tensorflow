@@ -38,6 +38,9 @@ class NormalCDF(tfb.Bijector):
         return self.normal_dist.log_prob(x)
 
 
+print(help(NormalCDF))
+
+
 class GaussianCopulaTriL(tfd.TransformedDistribution):
 
     """Takes a location, and lower triangular matrix for the Cholesky factor."""
@@ -65,4 +68,5 @@ pdf = GaussianCopulaTriL(
 # Plot its density.
 with tf.Session() as sess:
     pdf_eval = sess.run(pdf)
-plt.contour(x_grid, y_grid, pdf_eval, 100, cmap=plt.cm.jet)
+plt.splot(pdf_eval, cmap=plt.cm.jet)
+plt.show()
