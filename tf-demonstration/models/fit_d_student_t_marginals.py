@@ -3,7 +3,7 @@ Attempted implementation of fitting procedure found in SAS documentation:
 http://support.sas.com/documentation/cdl/en/etsug/66840/HTML/default/viewer.htm#etsug_copula_details06.htm
 Implementation of Maximum Likelyhood Estimation for 'dim' independent marginals.
 
-Tensorboard: tensorboard --logdir=/Users/peter/Documents/Pythonithub_repos/testing-tensorflow/tf-demonstration/models/logs
+Tensorboard: tensorboard --logdir=/Users/peter/Documents/Python/logs
 '''
 
 import numpy as np
@@ -11,8 +11,25 @@ import tensorflow as tf
 from datetime import datetime
 
 now = datetime.utcnow().strftime("%Y%m%d%H%M%S")
-root_logdir = '/Users/peter/Documents/Python/github_repos/testing-tensorflow/tf-demonstration/models/logs/t_marginals_logs'
+root_logdir = '/Users/peter/Documents/Python/logs/t_marginals_logs'
 logdir = '{}/run-{}/'.format(root_logdir, now)
+
+
+'''
+Function for generating mini batches
+'''
+
+
+def iterate_minibatches(inputs, batchsize, shuffle=True):
+    if shuffle:
+        indices = np.arange(inputs.shape[0])
+        np.random.shuffle(indices)
+    for start_idx in range(0, inputs.shape[0] - batchsize + 1, batchsize):
+        if shuffle:
+            excerpt = indices[start_idx:start_idx + batchsize]
+        else:
+            excerpt = slice(start_idx, start_idx + batchsize)
+        yield inputs[excerpt]
 
 
 '''
@@ -24,14 +41,15 @@ class Config():
 
     true_dfs = 4.0
     true_scales = 1.0
-    sample_size = 2500
+    sample_size = 3000
     init_df_params = {'minval': 2.0, 'maxval': 6.0}
-    init_scale_params = {'mean': 1.0, 'stddev': 0.5}
+    init_scale_params = {'mean': 1.0, 'stddev': 0.1}
     lr = 0.001
-    max_epochs = 100000
+    max_epochs = 1000
+    batch_size = 250
     eps_param, eps_loss, eps_grad = 1e-10, 1e-10, 1e-10
     random_seed = 0
-    dim = 3
+    dim = 20
 
 
 config = Config()
@@ -111,34 +129,39 @@ with tf.Session(graph=t_copula) as sess:
     obs_grad = sess.run(fetches=[grad], feed_dict={input_data: sample_data})
 
     while True:
-        # gradient step
-        sess.run(fetches=train_op, feed_dict={input_data: sample_data})
 
-        # update parameters
-        new_dfs, new_scales = sess.run(fetches=[dfs, scales])
-        diff_norm = np.linalg.norm(np.subtract([new_dfs, new_scales],
-                                               [obs_dfs[-1], obs_scales[-1]]))
+        for batch in iterate_minibatches(sample_data, config.batch_size):
 
-        # update loss
-        new_loss = sess.run(fetches=neg_log_like, feed_dict={input_data: sample_data})
-        loss_diff = np.abs(new_loss - obs_loss[-1])
+            # gradient step
+            sess.run(fetches=train_op, feed_dict={input_data: batch})
 
-        # update gradient
-        new_grad = sess.run(fetches=grad, feed_dict={input_data: sample_data})
-        grad_norm = np.linalg.norm(new_grad)
+            # update parameters
+            new_dfs, new_scales = sess.run(fetches=[dfs, scales])
+            diff_norm = np.linalg.norm(np.subtract([new_dfs, new_scales],
+                                                   [obs_dfs[-1], obs_scales[-1]]))
 
-        obs_dfs.append(new_dfs)
-        obs_scales.append(new_scales)
-        obs_loss.append(new_loss)
-        obs_grad.append(new_grad)
+            # update loss
+            new_loss = sess.run(fetches=neg_log_like, feed_dict={input_data: batch})
+            loss_diff = np.abs(new_loss - obs_loss[-1])
 
-        summary_str = merged_summary.eval(feed_dict={input_data: sample_data})
-        file_writer.add_summary(summary_str, epoch)
+            # update gradient
+            new_grad = sess.run(fetches=grad, feed_dict={input_data: batch})
+            grad_norm = np.linalg.norm(new_grad)
+
+            obs_dfs.append(new_dfs)
+            obs_scales.append(new_scales)
+            obs_loss.append(new_loss)
+            obs_grad.append(new_grad)
+
+            summary_str = merged_summary.eval(feed_dict={input_data: batch})
+            file_writer.add_summary(summary_str, epoch)
 
         if epoch % 100 == 0:
             print("Epoch", epoch, ": loss_diff =", loss_diff)
+            # print("Epoch", epoch, ": loss_diff =", loss_diff,
+            #       'dfs=', obs_dfs, 'scales=', obs_scales)
             saver_path = saver.save(
-                sess, '/Users/peter/Documents/Python/github_repos/testing-tensorflow/tf-demonstration/models/logs/checkpoints/t_marginals.ckpt')
+                sess, '/Users/peter/Documents/Python/logs/checkpoints/t_marginals.ckpt')
 
         if diff_norm < config.eps_param:
             print('Parameter convergence in {} iterations!'.format(epoch))
@@ -153,11 +176,11 @@ with tf.Session(graph=t_copula) as sess:
             break
 
         if epoch >= config.max_epochs:
-            print('Max number of iterations reached without convergence.')
+            print('Max number of epochs reached.')
             break
 
         epoch += 1
 
     saver.save(
-        sess, '/Users/peter/Documents/Python/github_repos/testing-tensorflow/tf-demonstration/models/logs/checkpoints/t_marginals_final.ckpt')
+        sess, '/Users/peter/Documents/Python/logs/checkpoints/t_marginals_final.ckpt')
     file_writer.close()
