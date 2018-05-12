@@ -1,0 +1,2010 @@
+node {
+  name: "inputs/Placeholder"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: -1
+        }
+        dim {
+          size: -1
+        }
+      }
+    }
+  }
+}
+node {
+  name: "inputs/Placeholder_1"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: -1
+        }
+        dim {
+          size: -1
+        }
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_DOUBLE
+        tensor_shape {
+        }
+        double_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/slope"
+  op: "VariableV2"
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "model_variables/slope/Assign"
+  op: "Assign"
+  input: "model_variables/slope"
+  input: "model_variables/Const"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/slope"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "model_variables/slope/read"
+  op: "Identity"
+  input: "model_variables/slope"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/slope"
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/Const_1"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_DOUBLE
+        tensor_shape {
+        }
+        double_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/intercept"
+  op: "VariableV2"
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "model_variables/intercept/Assign"
+  op: "Assign"
+  input: "model_variables/intercept"
+  input: "model_variables/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/intercept"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "model_variables/intercept/read"
+  op: "Identity"
+  input: "model_variables/intercept"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/intercept"
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/slope_1/tags"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "model_variables/slope_1"
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/slope_1"
+  op: "ScalarSummary"
+  input: "model_variables/slope_1/tags"
+  input: "model_variables/slope/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "model_variables/intercept_1/tags"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "model_variables/intercept_1"
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/intercept_1"
+  op: "ScalarSummary"
+  input: "model_variables/intercept_1/tags"
+  input: "model_variables/intercept/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "model_variables/slope_2/tag"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "model_variables/slope_2"
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/slope_2"
+  op: "HistogramSummary"
+  input: "model_variables/slope_2/tag"
+  input: "model_variables/slope/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "model_variables/intercept_2/tag"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "model_variables/intercept_2"
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/intercept_2"
+  op: "HistogramSummary"
+  input: "model_variables/intercept_2/tag"
+  input: "model_variables/intercept/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "linear_regression/mul"
+  op: "Mul"
+  input: "model_variables/slope/read"
+  input: "inputs/Placeholder"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "linear_regression/add"
+  op: "Add"
+  input: "linear_regression/mul"
+  input: "model_variables/intercept/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/sub"
+  op: "Sub"
+  input: "linear_regression/add"
+  input: "inputs/Placeholder_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/pow/y"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_DOUBLE
+        tensor_shape {
+        }
+        double_val: 2.0
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/pow"
+  op: "Pow"
+  input: "optimizer/sub"
+  input: "optimizer/pow/y"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 2
+          }
+        }
+        tensor_content: "\000\000\000\000\001\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/Sum"
+  op: "Sum"
+  input: "optimizer/pow"
+  input: "optimizer/Const"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/Shape"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/grad_ys_0"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_DOUBLE
+        tensor_shape {
+        }
+        double_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/Fill"
+  op: "Fill"
+  input: "optimizer/gradients/Shape"
+  input: "optimizer/gradients/grad_ys_0"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "index_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/Sum_grad/Reshape/shape"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 2
+          }
+        }
+        tensor_content: "\001\000\000\000\001\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/Sum_grad/Reshape"
+  op: "Reshape"
+  input: "optimizer/gradients/Fill"
+  input: "optimizer/gradients/optimizer/Sum_grad/Reshape/shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/Sum_grad/Shape"
+  op: "Shape"
+  input: "optimizer/pow"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/Sum_grad/Tile"
+  op: "Tile"
+  input: "optimizer/gradients/optimizer/Sum_grad/Reshape"
+  input: "optimizer/gradients/optimizer/Sum_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tmultiples"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/Shape"
+  op: "Shape"
+  input: "optimizer/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/Shape_1"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "optimizer/gradients/optimizer/pow_grad/Shape"
+  input: "optimizer/gradients/optimizer/pow_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/mul"
+  op: "Mul"
+  input: "optimizer/gradients/optimizer/Sum_grad/Tile"
+  input: "optimizer/pow/y"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/sub/y"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_DOUBLE
+        tensor_shape {
+        }
+        double_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/sub"
+  op: "Sub"
+  input: "optimizer/pow/y"
+  input: "optimizer/gradients/optimizer/pow_grad/sub/y"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/Pow"
+  op: "Pow"
+  input: "optimizer/sub"
+  input: "optimizer/gradients/optimizer/pow_grad/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/mul_1"
+  op: "Mul"
+  input: "optimizer/gradients/optimizer/pow_grad/mul"
+  input: "optimizer/gradients/optimizer/pow_grad/Pow"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/Sum"
+  op: "Sum"
+  input: "optimizer/gradients/optimizer/pow_grad/mul_1"
+  input: "optimizer/gradients/optimizer/pow_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/Reshape"
+  op: "Reshape"
+  input: "optimizer/gradients/optimizer/pow_grad/Sum"
+  input: "optimizer/gradients/optimizer/pow_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/Greater/y"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_DOUBLE
+        tensor_shape {
+        }
+        double_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/Greater"
+  op: "Greater"
+  input: "optimizer/sub"
+  input: "optimizer/gradients/optimizer/pow_grad/Greater/y"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/Log"
+  op: "Log"
+  input: "optimizer/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/zeros_like"
+  op: "ZerosLike"
+  input: "optimizer/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/Select"
+  op: "Select"
+  input: "optimizer/gradients/optimizer/pow_grad/Greater"
+  input: "optimizer/gradients/optimizer/pow_grad/Log"
+  input: "optimizer/gradients/optimizer/pow_grad/zeros_like"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/mul_2"
+  op: "Mul"
+  input: "optimizer/gradients/optimizer/Sum_grad/Tile"
+  input: "optimizer/pow"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/mul_3"
+  op: "Mul"
+  input: "optimizer/gradients/optimizer/pow_grad/mul_2"
+  input: "optimizer/gradients/optimizer/pow_grad/Select"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/Sum_1"
+  op: "Sum"
+  input: "optimizer/gradients/optimizer/pow_grad/mul_3"
+  input: "optimizer/gradients/optimizer/pow_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/Reshape_1"
+  op: "Reshape"
+  input: "optimizer/gradients/optimizer/pow_grad/Sum_1"
+  input: "optimizer/gradients/optimizer/pow_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/tuple/group_deps"
+  op: "NoOp"
+  input: "^optimizer/gradients/optimizer/pow_grad/Reshape"
+  input: "^optimizer/gradients/optimizer/pow_grad/Reshape_1"
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/tuple/control_dependency"
+  op: "Identity"
+  input: "optimizer/gradients/optimizer/pow_grad/Reshape"
+  input: "^optimizer/gradients/optimizer/pow_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@optimizer/gradients/optimizer/pow_grad/Reshape"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/pow_grad/tuple/control_dependency_1"
+  op: "Identity"
+  input: "optimizer/gradients/optimizer/pow_grad/Reshape_1"
+  input: "^optimizer/gradients/optimizer/pow_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@optimizer/gradients/optimizer/pow_grad/Reshape_1"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/sub_grad/Shape"
+  op: "Shape"
+  input: "linear_regression/add"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/sub_grad/Shape_1"
+  op: "Shape"
+  input: "inputs/Placeholder_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/sub_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "optimizer/gradients/optimizer/sub_grad/Shape"
+  input: "optimizer/gradients/optimizer/sub_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/sub_grad/Sum"
+  op: "Sum"
+  input: "optimizer/gradients/optimizer/pow_grad/tuple/control_dependency"
+  input: "optimizer/gradients/optimizer/sub_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/sub_grad/Reshape"
+  op: "Reshape"
+  input: "optimizer/gradients/optimizer/sub_grad/Sum"
+  input: "optimizer/gradients/optimizer/sub_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/sub_grad/Sum_1"
+  op: "Sum"
+  input: "optimizer/gradients/optimizer/pow_grad/tuple/control_dependency"
+  input: "optimizer/gradients/optimizer/sub_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/sub_grad/Neg"
+  op: "Neg"
+  input: "optimizer/gradients/optimizer/sub_grad/Sum_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/sub_grad/Reshape_1"
+  op: "Reshape"
+  input: "optimizer/gradients/optimizer/sub_grad/Neg"
+  input: "optimizer/gradients/optimizer/sub_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/sub_grad/tuple/group_deps"
+  op: "NoOp"
+  input: "^optimizer/gradients/optimizer/sub_grad/Reshape"
+  input: "^optimizer/gradients/optimizer/sub_grad/Reshape_1"
+}
+node {
+  name: "optimizer/gradients/optimizer/sub_grad/tuple/control_dependency"
+  op: "Identity"
+  input: "optimizer/gradients/optimizer/sub_grad/Reshape"
+  input: "^optimizer/gradients/optimizer/sub_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@optimizer/gradients/optimizer/sub_grad/Reshape"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/optimizer/sub_grad/tuple/control_dependency_1"
+  op: "Identity"
+  input: "optimizer/gradients/optimizer/sub_grad/Reshape_1"
+  input: "^optimizer/gradients/optimizer/sub_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@optimizer/gradients/optimizer/sub_grad/Reshape_1"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/add_grad/Shape"
+  op: "Shape"
+  input: "linear_regression/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/add_grad/Shape_1"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/add_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "optimizer/gradients/linear_regression/add_grad/Shape"
+  input: "optimizer/gradients/linear_regression/add_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/add_grad/Sum"
+  op: "Sum"
+  input: "optimizer/gradients/optimizer/sub_grad/tuple/control_dependency"
+  input: "optimizer/gradients/linear_regression/add_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/add_grad/Reshape"
+  op: "Reshape"
+  input: "optimizer/gradients/linear_regression/add_grad/Sum"
+  input: "optimizer/gradients/linear_regression/add_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/add_grad/Sum_1"
+  op: "Sum"
+  input: "optimizer/gradients/optimizer/sub_grad/tuple/control_dependency"
+  input: "optimizer/gradients/linear_regression/add_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/add_grad/Reshape_1"
+  op: "Reshape"
+  input: "optimizer/gradients/linear_regression/add_grad/Sum_1"
+  input: "optimizer/gradients/linear_regression/add_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/add_grad/tuple/group_deps"
+  op: "NoOp"
+  input: "^optimizer/gradients/linear_regression/add_grad/Reshape"
+  input: "^optimizer/gradients/linear_regression/add_grad/Reshape_1"
+}
+node {
+  name: "optimizer/gradients/linear_regression/add_grad/tuple/control_dependency"
+  op: "Identity"
+  input: "optimizer/gradients/linear_regression/add_grad/Reshape"
+  input: "^optimizer/gradients/linear_regression/add_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@optimizer/gradients/linear_regression/add_grad/Reshape"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/add_grad/tuple/control_dependency_1"
+  op: "Identity"
+  input: "optimizer/gradients/linear_regression/add_grad/Reshape_1"
+  input: "^optimizer/gradients/linear_regression/add_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@optimizer/gradients/linear_regression/add_grad/Reshape_1"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/Shape"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/Shape_1"
+  op: "Shape"
+  input: "inputs/Placeholder"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "optimizer/gradients/linear_regression/mul_grad/Shape"
+  input: "optimizer/gradients/linear_regression/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/Mul"
+  op: "Mul"
+  input: "optimizer/gradients/linear_regression/add_grad/tuple/control_dependency"
+  input: "inputs/Placeholder"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/Sum"
+  op: "Sum"
+  input: "optimizer/gradients/linear_regression/mul_grad/Mul"
+  input: "optimizer/gradients/linear_regression/mul_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/Reshape"
+  op: "Reshape"
+  input: "optimizer/gradients/linear_regression/mul_grad/Sum"
+  input: "optimizer/gradients/linear_regression/mul_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/Mul_1"
+  op: "Mul"
+  input: "model_variables/slope/read"
+  input: "optimizer/gradients/linear_regression/add_grad/tuple/control_dependency"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/Sum_1"
+  op: "Sum"
+  input: "optimizer/gradients/linear_regression/mul_grad/Mul_1"
+  input: "optimizer/gradients/linear_regression/mul_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/Reshape_1"
+  op: "Reshape"
+  input: "optimizer/gradients/linear_regression/mul_grad/Sum_1"
+  input: "optimizer/gradients/linear_regression/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/tuple/group_deps"
+  op: "NoOp"
+  input: "^optimizer/gradients/linear_regression/mul_grad/Reshape"
+  input: "^optimizer/gradients/linear_regression/mul_grad/Reshape_1"
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/tuple/control_dependency"
+  op: "Identity"
+  input: "optimizer/gradients/linear_regression/mul_grad/Reshape"
+  input: "^optimizer/gradients/linear_regression/mul_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@optimizer/gradients/linear_regression/mul_grad/Reshape"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/gradients/linear_regression/mul_grad/tuple/control_dependency_1"
+  op: "Identity"
+  input: "optimizer/gradients/linear_regression/mul_grad/Reshape_1"
+  input: "^optimizer/gradients/linear_regression/mul_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@optimizer/gradients/linear_regression/mul_grad/Reshape_1"
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/slope/Adagrad/Initializer/Const"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/slope"
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_DOUBLE
+        tensor_shape {
+        }
+        double_val: 0.1
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/slope/Adagrad"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/slope"
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "model_variables/slope/Adagrad/Assign"
+  op: "Assign"
+  input: "model_variables/slope/Adagrad"
+  input: "model_variables/slope/Adagrad/Initializer/Const"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/slope"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "model_variables/slope/Adagrad/read"
+  op: "Identity"
+  input: "model_variables/slope/Adagrad"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/slope"
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/intercept/Adagrad/Initializer/Const"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/intercept"
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_DOUBLE
+        tensor_shape {
+        }
+        double_val: 0.1
+      }
+    }
+  }
+}
+node {
+  name: "model_variables/intercept/Adagrad"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/intercept"
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "model_variables/intercept/Adagrad/Assign"
+  op: "Assign"
+  input: "model_variables/intercept/Adagrad"
+  input: "model_variables/intercept/Adagrad/Initializer/Const"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/intercept"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "model_variables/intercept/Adagrad/read"
+  op: "Identity"
+  input: "model_variables/intercept/Adagrad"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/intercept"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/Adagrad/learning_rate"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.800000011920929
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/Adagrad/update_model_variables/slope/Cast"
+  op: "Cast"
+  input: "optimizer/Adagrad/learning_rate"
+  attr {
+    key: "DstT"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "SrcT"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/slope"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/Adagrad/update_model_variables/slope/ApplyAdagrad"
+  op: "ApplyAdagrad"
+  input: "model_variables/slope"
+  input: "model_variables/slope/Adagrad"
+  input: "optimizer/Adagrad/update_model_variables/slope/Cast"
+  input: "optimizer/gradients/linear_regression/mul_grad/tuple/control_dependency"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/slope"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "optimizer/Adagrad/update_model_variables/intercept/Cast"
+  op: "Cast"
+  input: "optimizer/Adagrad/learning_rate"
+  attr {
+    key: "DstT"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "SrcT"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/intercept"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/Adagrad/update_model_variables/intercept/ApplyAdagrad"
+  op: "ApplyAdagrad"
+  input: "model_variables/intercept"
+  input: "model_variables/intercept/Adagrad"
+  input: "optimizer/Adagrad/update_model_variables/intercept/Cast"
+  input: "optimizer/gradients/linear_regression/add_grad/tuple/control_dependency_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/intercept"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "optimizer/Adagrad"
+  op: "NoOp"
+  input: "^optimizer/Adagrad/update_model_variables/slope/ApplyAdagrad"
+  input: "^optimizer/Adagrad/update_model_variables/intercept/ApplyAdagrad"
+}
+node {
+  name: "optimizer/loss/tags"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "optimizer/loss"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/loss"
+  op: "ScalarSummary"
+  input: "optimizer/loss/tags"
+  input: "model_variables/slope/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "optimizer/loss_1/tag"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "optimizer/loss_1"
+      }
+    }
+  }
+}
+node {
+  name: "optimizer/loss_1"
+  op: "HistogramSummary"
+  input: "optimizer/loss_1/tag"
+  input: "optimizer/Sum"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+}
+node {
+  name: "Merge/MergeSummary"
+  op: "MergeSummary"
+  input: "model_variables/slope_1"
+  input: "model_variables/intercept_1"
+  input: "model_variables/slope_2"
+  input: "model_variables/intercept_2"
+  input: "optimizer/loss"
+  input: "optimizer/loss_1"
+  attr {
+    key: "N"
+    value {
+      i: 6
+    }
+  }
+}
+node {
+  name: "init"
+  op: "NoOp"
+  input: "^model_variables/slope/Assign"
+  input: "^model_variables/intercept/Assign"
+  input: "^model_variables/slope/Adagrad/Assign"
+  input: "^model_variables/intercept/Adagrad/Assign"
+}
+versions {
+  producer: 26
+}

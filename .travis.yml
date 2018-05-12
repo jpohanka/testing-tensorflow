@@ -15,19 +15,22 @@ matrix:
     # Python build
     - language: python
       python:
-        - 2.7
+        #- 2.7
         - 3.6
       before_install:
+        - sudo pip install six --upgrade
+        - sudo python -m pip install --upgrade pip
         - sudo pip install -r requirements.txt;
       install:
-        - echo "pass" #TODO.
+        - echo "pass" # make -f Makefile
       script:
-        - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-            python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
-          fi
-        - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
-            python3 tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
-          fi
+        - echo "pass"
+        # - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+        #     python tf-demonstration/prod-client-gui-mock/run_all_tests.py;
+        #   fi
+        # - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+        #     python3 tf-demonstration/prod-client-gui-mock/run_all_tests.py;
+        #   fi
       
     # Golang build
     - language: go
@@ -41,25 +44,3 @@ matrix:
         - echo "pass" #TODO.
       script:
         - echo "pass" #TODO.
-
-# # 
-# before_install:
-#   # For the python builds, install the requirements.
-#   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-#       sudo pip install -r requirements.txt;
-#     fi
-#   - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
-#       sudo pip install -r requirements.txt;
-#     fi
-# 
-# install:
-#   - echo "pass"
-# 
-# script:
-#   # Run the python unit tests.
-#   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-#       python tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
-#     fi
-#   - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
-#       python3 tf-demonstration/prod-client-gui-mock/tests/run_all_tests.py;
-#     fi
