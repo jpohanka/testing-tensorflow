@@ -41,7 +41,7 @@ def copula_corr(data):
 
     '''
     Algorithm 5.55 from McNeil, Frey, and Embrechts (2005) to make correlation
-    matrix positive semidefinite
+    matrix positive semidefinite.
     '''
 
     if isPSD(corr) is False:
