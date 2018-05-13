@@ -30,7 +30,7 @@ func main() {
 		log.Println(err)
 	}
 
-  // Create a new TF session.
+	// Create a new TF session.
 	session, err := tf.NewSession(graph, nil)
 	if err != nil {
 		log.Fatal(err)
@@ -52,12 +52,12 @@ func main() {
 		graph.Operation("linear_regression/add").Output(0),
 	}
 
-  // Run the model calculation with the x_sample Tensor define above.
+	// Run the model calculation with the x_sample Tensor define above.
 	output, err := session.Run(feeds, fetches, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-  // Print out the calculation results.
+	// Print out the calculation results.
 	fmt.Println("The calculation results :", output[0].Value())
 }
