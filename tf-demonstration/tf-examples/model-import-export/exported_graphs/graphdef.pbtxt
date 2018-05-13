@@ -1,5 +1,5 @@
 node {
-  name: "inputs/Placeholder"
+  name: "inputs/x_sample"
   op: "Placeholder"
   attr {
     key: "dtype"
@@ -22,7 +22,7 @@ node {
   }
 }
 node {
-  name: "inputs/Placeholder_1"
+  name: "inputs/y_sample"
   op: "Placeholder"
   attr {
     key: "dtype"
@@ -382,7 +382,7 @@ node {
   name: "linear_regression/mul"
   op: "Mul"
   input: "model_variables/slope/read"
-  input: "inputs/Placeholder"
+  input: "inputs/x_sample"
   attr {
     key: "T"
     value {
@@ -406,7 +406,7 @@ node {
   name: "optimizer/sub"
   op: "Sub"
   input: "linear_regression/add"
-  input: "inputs/Placeholder_1"
+  input: "inputs/y_sample"
   attr {
     key: "T"
     value {
@@ -995,7 +995,7 @@ node {
 node {
   name: "optimizer/gradients/optimizer/sub_grad/Shape_1"
   op: "Shape"
-  input: "inputs/Placeholder_1"
+  input: "inputs/y_sample"
   attr {
     key: "T"
     value {
@@ -1368,7 +1368,7 @@ node {
 node {
   name: "optimizer/gradients/linear_regression/mul_grad/Shape_1"
   op: "Shape"
-  input: "inputs/Placeholder"
+  input: "inputs/x_sample"
   attr {
     key: "T"
     value {
@@ -1398,7 +1398,7 @@ node {
   name: "optimizer/gradients/linear_regression/mul_grad/Mul"
   op: "Mul"
   input: "optimizer/gradients/linear_regression/add_grad/tuple/control_dependency"
-  input: "inputs/Placeholder"
+  input: "inputs/x_sample"
   attr {
     key: "T"
     value {
@@ -1798,7 +1798,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 0.800000011920929
+        float_val: 0.800000011921
       }
     }
   }
@@ -1912,8 +1912,8 @@ node {
 node {
   name: "optimizer/Adagrad"
   op: "NoOp"
-  input: "^optimizer/Adagrad/update_model_variables/slope/ApplyAdagrad"
   input: "^optimizer/Adagrad/update_model_variables/intercept/ApplyAdagrad"
+  input: "^optimizer/Adagrad/update_model_variables/slope/ApplyAdagrad"
 }
 node {
   name: "optimizer/loss/tags"
@@ -2000,10 +2000,258 @@ node {
 node {
   name: "init"
   op: "NoOp"
-  input: "^model_variables/slope/Assign"
+  input: "^model_variables/intercept/Adagrad/Assign"
   input: "^model_variables/intercept/Assign"
   input: "^model_variables/slope/Adagrad/Assign"
-  input: "^model_variables/intercept/Adagrad/Assign"
+  input: "^model_variables/slope/Assign"
+}
+node {
+  name: "save/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "model"
+      }
+    }
+  }
+}
+node {
+  name: "save/SaveV2/tensor_names"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 2
+          }
+        }
+        string_val: "model_variables/intercept"
+        string_val: "model_variables/slope"
+      }
+    }
+  }
+}
+node {
+  name: "save/SaveV2/shape_and_slices"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 2
+          }
+        }
+        string_val: ""
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/SaveV2"
+  op: "SaveV2"
+  input: "save/Const"
+  input: "save/SaveV2/tensor_names"
+  input: "save/SaveV2/shape_and_slices"
+  input: "model_variables/intercept"
+  input: "model_variables/slope"
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_DOUBLE
+        type: DT_DOUBLE
+      }
+    }
+  }
+}
+node {
+  name: "save/control_dependency"
+  op: "Identity"
+  input: "save/Const"
+  input: "^save/SaveV2"
+  attr {
+    key: "T"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@save/Const"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2/tensor_names"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 2
+          }
+        }
+        string_val: "model_variables/intercept"
+        string_val: "model_variables/slope"
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2/shape_and_slices"
+  op: "Const"
+  device: "/device:CPU:0"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 2
+          }
+        }
+        string_val: ""
+        string_val: ""
+      }
+    }
+  }
+}
+node {
+  name: "save/RestoreV2"
+  op: "RestoreV2"
+  input: "save/Const"
+  input: "save/RestoreV2/tensor_names"
+  input: "save/RestoreV2/shape_and_slices"
+  device: "/device:CPU:0"
+  attr {
+    key: "dtypes"
+    value {
+      list {
+        type: DT_DOUBLE
+        type: DT_DOUBLE
+      }
+    }
+  }
+}
+node {
+  name: "save/Assign"
+  op: "Assign"
+  input: "model_variables/intercept"
+  input: "save/RestoreV2"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/intercept"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/Assign_1"
+  op: "Assign"
+  input: "model_variables/slope"
+  input: "save/RestoreV2:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_DOUBLE
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@model_variables/slope"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/restore_all"
+  op: "NoOp"
+  input: "^save/Assign"
+  input: "^save/Assign_1"
 }
 versions {
   producer: 26

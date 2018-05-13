@@ -2,10 +2,12 @@
 
 The following example illustrates the way how one can **train**, **persist**, **export** and **import** TensorFlow models.
 
-The example contains two scripts:
+The example contains the following:
 
   - `model_producer.py` - trains and persists a simple linear regression model.
-  - `model_consumer.py` - loads the persisted model and runs simple calculations. 
+  - `model_consumer.py` - loads the persisted model and runs simple calculations  on it.
+  - `java_consumer` - a simple `Java` CLI application that reads the persisted model and runs simple calculations on it.
+  - `go_consumer` - a simple `Golang` CLI application that reads the persisted model and runs simple calculations on it.
 
 ## model_producer
 
@@ -43,6 +45,12 @@ epoch: 1800, loss: 0.002482735014588079, slope: 1.5000037630768492, intercept: -
 epoch: 1900, loss: 0.0024827083422117174, slope: 1.5000040359253222, intercept: -2.9987834928787764
 ```
 
+The `model_producer.py` script will create the following folders containing the output files:
+
+* `exported_graphs` - contains the `GraphDef` proto in a `pbtxt` (human-readable protobuf format, similar to JSON)
+* `saved_model` - contains the output of the `Saver` class
+* `summaries` - contains the summaries from individual training runs.
+
 ## model_consumer
 
 The `model_consumer.py` loads the peristed trained model created by the `model_producer.py`. The script simply reads the `Saver` file format and through TF graph `collections` reads the information about the **input** and **output** variables.
@@ -65,6 +73,59 @@ Run the `model_consumer.py` by the following command:
 python model_consumer.py
 ```
 
+## Freezing the GraphDef proto
+
+After the model training is done and the model is ready for production, it is a common practice to 'freeze' the model `GraphDef` proto - converting all TF `Variable` tensors into TF `Constant` tensors.
+
+For freezing model graphs the user can use the `freeze_graph.py` tool developed by the TensorFlow team.
+
+In our case, the following script does all the job for the user:
+
+```
+./freeze_graph_linear_regression.sh
+```
+
+A successful freezing will produce the following output:
+
+```
+Converted 2 variables to const ops.
+```
+
+The script will create a new folder `frozen_graphs` with the file containing the serialized frozen `GraphDef` proto.
+
+## java_consumer
+
+TBD.
+
+## go_consumer
+
+Before trying out the Go consumer, it is necessary to have the Golang TF package installed and working properly.
+
+For installation steps, please check out the TF homepage: https://www.tensorflow.org/install/install_go. Regarding the
+environment variables `LIBRARY_PATH`, `LD_LIBRARY_PATH` and `DYLD_LIBRARY_PATH` it is recommended to add the path to the
+TF C shared libraries in the `.bashrc` and `.profile` configuration files.
+
+For running the `go_consumer` either run the Go code as a script or compile it and then run the created executable.
+
+For the script mode, run the following command:
+
+```
+go run go_consumer/go_consumer.go
+```
+
+For the compilation mode, run the following commands:
+
+```
+go build go_consumer/go_consumer.go
+./go_consumer/go_consumer
+```
+
+After a successful calculation, the results have the following format:
+
+```
+The calculation results : [-3.0006167485345174 -1.5006227222640551 -4.500610774804979 -0.0006286959935928316]
+```
+
 ## MetaGraphDef proto
 
 The `MetaGraphDef` proto is composed of:
@@ -74,7 +135,7 @@ The `MetaGraphDef` proto is composed of:
   * `SaverDef` proto - the configuration of a Saver
   * `CollectionDef` map - describes additional components of the model, such as Variables, tf.train.QueueRunner, etc.
   * `SignatureDef` map - contains the signature information of each Tensor in the graph (node inputs/outputs, type, shape, sparsity etc.)
-  * `AssetFileDef` proto - 
+  * `AssetFileDef` proto
 
 ## The Graph class
 
@@ -121,7 +182,7 @@ node {
 ...
 ```
 
-Check out the `graphdef.pbtxt` file, where the `GraphDef` proto of the current model is stored.
+Check out the `exported_graphs/graphdef.pbtxt` file, where the `GraphDef` proto of the current model is stored.
 
 ### get_all_collection_keys()
 
@@ -152,5 +213,3 @@ The output will be all operations in the graph:
  <tf.Operation 'model_variables/slope/read' type=Identity>,
  ...
 ```
-
-Check out the `get_operations.txt` file, where the full list of operations is stored.

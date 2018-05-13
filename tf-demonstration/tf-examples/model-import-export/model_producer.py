@@ -6,7 +6,7 @@ import numpy as np
 learning_rate = 0.8
 learning_epochs = 2000
 
-path = 'tf-demonstration/tf-examples/model-import-export'
+# path = 'tf-demonstration/tf-examples/model-import-export'
 
 g = tf.Graph()
 
@@ -89,7 +89,7 @@ saver = tf.train.Saver(var_list=[slope, intercept])
 
 with tf.Session(graph=g) as sess:
     # Create a summary writer.
-    writer = tf.summary.FileWriter(path+"/summaries/linear_regression", graph=sess.graph)
+    writer = tf.summary.FileWriter("summaries/linear_regression", graph=sess.graph)
     
     sess.run(init)
     for epoch in range(learning_epochs):
@@ -114,5 +114,19 @@ with tf.Session(graph=g) as sess:
         # After every 100 epochs, persist the estimated values of the model variables.
         if epoch % 100 == 0:
             print("epoch: %s, loss: %s, slope: %s, intercept: %s" % (epoch, loss_val, slope_val, intercept_val))
-            saver.save(sess, global_step=epoch, save_path=path+'/saved_model/linear_regression')
-        
+            saver.save(sess, global_step=epoch, save_path='saved_model/linear_regression.ckpt')
+
+# ------------------------------------------------------------------------------
+# Export the MetaGraph proto.
+# ------------------------------------------------------------------------------
+
+# tf.train.export_meta_graph(
+#     filename=path+'/exported_graphs/graphdef.pb',
+#     graph_def=g.as_graph_def()
+# )
+
+tf.train.write_graph(
+    graph_or_graph_def=sess.graph.as_graph_def(),
+    logdir="exported_graphs",
+    name="graphdef.pbtxt"
+)
