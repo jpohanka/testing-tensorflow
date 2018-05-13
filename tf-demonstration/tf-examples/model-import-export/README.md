@@ -11,6 +11,8 @@ The example contains the following:
 
 ## model_producer
 
+![graph](graphs/linear_regression_graph.png)
+
 The `model_producer.py` script runs the model training phase and persists the 
 estimated model with the estimated values of the model parameters.
 
