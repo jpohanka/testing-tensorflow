@@ -46,7 +46,7 @@ class Config():
     init_scale_params = {'mean': 1.0, 'stddev': 0.1}
     lr = 0.001
     max_epochs = 1000
-    batch_size = 250
+    batch_size = 50
     eps_param, eps_loss, eps_grad = 1e-10, 1e-10, 1e-10
     random_seed = 0
     dim = 20
