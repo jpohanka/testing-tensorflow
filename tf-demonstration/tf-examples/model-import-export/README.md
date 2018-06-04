@@ -1,4 +1,4 @@
-# model-import-export
+# Model import-export example
 
 The following example illustrates the way how one can **train**, **persist**, **export** and **import** TensorFlow models.
 

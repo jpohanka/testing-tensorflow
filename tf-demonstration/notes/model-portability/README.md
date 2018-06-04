@@ -1,4 +1,4 @@
-# The Dataflow approach
+# Model portability
 
 The following is an high-level example of the portability mechanism of TensorFlow:
 
